@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import Portal from '@reach/portal'
+import { Portal } from '@reach/portal'
 import React, { forwardRef, useRef, useState, useCallback } from 'react'
 import { BottomSheet as _BottomSheet } from './BottomSheet'
 import type { Props, RefHandles, SpringEvent } from './types'
@@ -12,7 +12,7 @@ export type {
 
 // Because SSR is annoying to deal with, and all the million complaints about window, navigator and dom elenents!
 export const BottomSheet = forwardRef<RefHandles, Props>(function BottomSheet(
-  { onSpringStart, onSpringEnd, skipInitialTransition, ...props },
+  { onSpringStart, onSpringEnd, skipInitialTransition, containerRef, ...props },
   ref
 ) {
   // Mounted state, helps SSR but also ensures you can't tab into the sheet while it's closed, or nav there in a screen reader
@@ -74,7 +74,7 @@ export const BottomSheet = forwardRef<RefHandles, Props>(function BottomSheet(
   }
 
   return (
-    <Portal data-rsbs-portal>
+    <Portal data-rsbs-portal containerRef={containerRef}>
       <_BottomSheet
         {...props}
         lastSnapRef={lastSnapRef}

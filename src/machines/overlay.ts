@@ -78,23 +78,26 @@ interface OverlayStateSchema {
   }
 }
 
-type OverlayEvent =
+type OverlayEvent = (
   | { type: 'OPEN' }
   | {
       type: 'SNAP'
-      payload: {
-        y: number
-        velocity: number
-        source: 'dragging' | 'custom' | string
-      }
     }
   | { type: 'CLOSE' }
   | { type: 'DRAG' }
   | { type: 'RESIZE' }
+) & {
+  payload: {
+    y: number
+    velocity: number
+    source: 'dragging' | 'custom' | string
+  }
+}
 
 // The context (extended state) of the machine
 interface OverlayContext {
   initialState: 'OPEN' | 'CLOSED'
+  snapSource?: 'dragging' | 'custom' | string
 }
 function sleep(ms = 1000) {
   return new Promise((resolve) => setTimeout(resolve, ms))
